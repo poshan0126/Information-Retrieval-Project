@@ -1,5 +1,3 @@
-# Search Application README
-
 ## Abstract
 In this project, I developed a search application that indexes and retrieves documents using TF-IDF (Term Frequency-Inverse Document Frequency) and cosine similarity. The objective was to create a system capable of efficiently indexing and querying a collection of documents, providing users with relevant search results. The next steps involve potential enhancements such as improving indexing efficiency, incorporating more advanced ranking algorithms, and optimizing user interface elements for better user experience.
 
