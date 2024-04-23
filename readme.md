@@ -1,5 +1,3 @@
-# Search Application README
-
 ## Abstract
 In this project, I developed a search application that indexes and retrieves documents using TF-IDF (Term Frequency-Inverse Document Frequency) and cosine similarity. The objective was to create a system capable of efficiently indexing and querying a collection of documents, providing users with relevant search results. The next steps involve potential enhancements such as improving indexing efficiency, incorporating more advanced ranking algorithms, and optimizing user interface elements for better user experience.
 
@@ -56,7 +54,7 @@ To install and run the web search application, follow these steps:
 5. Open a web browser and go to `http://localhost:5000` to access the search application.
 
 ## Acknowledgement
-I would like to express our gratitude to Professor for his guidance and support throughout this project. I am also thankful to the teaching assistants for their assistance and valuable feedback. Additionally, I appreciate the contributions of the learning management system and the helpful interactions with AI tools like ChatGPT, Claude, and Co-Pilot, which enhanced my learning experience.
+I would like to express my gratitude to Professor for his guidance and support throughout this project. I am also thankful to the teaching assistants for their assistance and valuable feedback. Additionally, I appreciate the contributions of the learning management system and the helpful interactions with AI tools like ChatGPT, Claude, and Co-Pilot, which enhanced my learning experience.
 
 ## Conclusion
 The project achieved success in implementing a basic search application capable of indexing and retrieving documents. However, there are areas for improvement such as indexing efficiency and user interface design. It's important to consider potential caveats such as scalability limitations and the need for further optimization.
