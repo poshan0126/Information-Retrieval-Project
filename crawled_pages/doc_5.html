@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dijkstra's Algorithm Runtime</title>
+    <link rel="stylesheet" type="text/css" href="../../assets/css/labslide.css"></script>
+    <script type="text/javascript" src="../../assets-llab/loader.js"></script>
+    <script type="text/javascript" src="../../assets/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../../assets/js/script.js"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="slidetitle">Dijkstra's Shortest Path Algorithm Runtime</div>
+        <div class="segment">
+            <div class="segmenttitle">Pseudocode</div>
+            <div class="text">Pseudocode for Dijkstra's algorithm is provided below. Remember that the priority value of a vertex in the priority queue corresponds to the shortest distance we've found (so far) to that vertex from the starting vertex. Also, you can treat our priority queue as a min heap.</div>
+            <div class="code text">Add the starting vertex <code>s</code> to the initially empty fringe with priority value 0</br>
+            Add all other vertices to the fringe with priority value of infinity</br>
+            While the fringe is not empty:
+                <div class="codeindent">
+                Remove the vertex in the fringe with the minimum priority.
+                    <div class="codeindent">
+                    We'll call this vertex <code>u</code>.</br>
+                    Its priority is the shortest distance from <code>s</code> to <code>u</code>.
+                    </div>
+                For each of <code>u</code>'s neighbors <code>v</code>:
+                    <div class="codeindent">
+                    If <code>v</code> is not already in the priority queue, do nothing.
+                        <div class="codeindent">
+                        (We've already found the shortest distance from <code>s</code> to <code>v</code>.)
+                        </div>
+                    Otherwise, update <code>v</code>'s predecessor to <code>u</code>, and update its priority value to the minimum of:
+                        <div class="codeindent">
+                        Its current priority value</br>
+                        The shortest distance from <code>s</code> to <code>u</code> + the weight of the edge <code>(u, v)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="segment">
+            <div class="segmenttitle">Calculating running time</div>
+            <div class="text">Now let's calculate the running time of Dijkstra's algorithm using a binary min-heap priority queue as the fringe. Let <code>|E|</code> and <code>|V|</code> be the number of edges and the number of vertices in the graph respectively. (In graph theory, <code>E</code> and <code>V</code> refer to the set of a graph's edges and the set of a graph's vertices; <code>|E|</code> and <code>|V|</code> are the sizes of these sets.)</div>
+            <ol>
+                <li class="text">Adding all <code>|V|</code> vertices of the graph to a binary min-heap takes a total of <code>O(|V|)</code> time. (Remember the linear time heapify example from lecture?)</li>
+                <li class="text">Updating a vertex's priority value in the priority queue can be done with a binary min-heap by removing it, then readding it with an updated priority value. If we keep a hash map of vertices and their indices in the binary min-heap array and assume that the hash map <code>put</code> operation takes constant time, then we can remove and readd a vertex to a binary min-heap in <code>O(log|V|)</code> time. This happens to a vertex at most once for each of its neighbors. Thus, this will happen at most <code>|E|</code> times over the course of an entire run of Dijkstra's algorithm. Since each priority value update takes <code>O(log|V|)</code> time, the total of all priority value updates takes <code>O(|E|log|V|)</code>.</li>
+                <li class="text">If we keep an adjacency matrix of edge weights, then we can access edge weights in constant time. If we keep a hash map of vertices with their priority values, then accessing a vertex's priority value is also a constant time operation. This makes calculating a vertex's updated priority value a constant time operation. Since we only have to calculate updated priority values <code>O(|E|)</code> times, all update calculations take a total of <code>O(|E|)</code> time.</li>
+                <li class="text">Notice that each vertex is removed from the fringe exactly once, and never readded to the fringe (excluding priority value updates). Dijkstra's algorithm only removes from the priority queue <code>|V|</code> times, and each removal takes <code>O(log|V|)</code> time for a total of <code>O(|V|log|V|)</code> time for all vertex removals.</li>
+                <li class="text">Checking whether the priority queue is empty is a constaint time operation and happens <code>O(|V|)</code> times (once right before each vertex is removed from the priority queue). Thus, all <code>isEmpty</code> checks take a total of <code>O(|V|)</code> time.</li>
+                <li class="text">Iterating through a vertex's neighbors can be done in time proportional to that vertex's degree (the number of neighbors it has) with an adjacency list. Therefore iterating over all vertices' neighbors over the course of a run of Dijkstra's algorithm takes <code>O(|E|)</code> time.</li>
+            </ol>
+            <div class="text">Adding these running times together, we have <code>O(|E|log|V|)</code> for all priority value updates and <code>O(|V|log|V|)</code> for removing all vertices (there are also some other <code>O(|E|)</code> and <code>O(|V|)</code> additive terms, but they are dominated by these two terms). This means the running time for Dijkstra's algorithm using a binary min-heap as a priority queue is <code>O((|E|+|V|)log|V|)</code>.</div>
+            <div class="text">A directed graph is <em>weakly connected</em> if replacing all of its directed edges with undirected edges produces a connected undirected graph. If we assume that the input graph is weakly connected, then the graph must have at least <code>|V| - 1</code> edges. This implies that <code>|V|</code> is in <code>O(|E|)</code>, which means we can simplify the running time above to <code>O(|E|log|V|)</code>.</div>
+            <div class="text">Fun fact: With a more advanced data structure called a <a href="http://en.wikipedia.org/wiki/Fibonacci_heap">Fibonacci heap</a>, the running time of Dijkstra's algorithm can be reduced to <code>O(|E|+|V|log|V|)</code></div>
+        </div>
+        <div class="segment">
+            <div class="segmenttitle">Activity: Coding Dijkstra's algorithm</div>
+            <div class="text">Add Dijkstra's algorithm to <a href="http://www-inst.eecs.berkeley.edu/~cs61bl/code/lab23/Graph.java"><code>Graph.java</code></a> from the previous lab. Here's the method header:</div>
+            <div class="code"><code>public ArrayList&lt;Integer&gt; shortestPath(int startVertex, int endVertex) {
+                <div class="codeindent">
+                // YOUR CODE HERE
+                </div>
+            }
+            </code></div>
+            <div class="text">For this method, assume that each edge in the graph has a <code>myEdgeInfo</code> object that is an <code>Integer</code>. Note: you do not have to implement the <code>O((|E| + |V|)log|V|)</code> optimized version of Dijkstra's algorithm described above (although you can if you want a challenge).</div>
+        </div>
+    </div>
+</body>
+</html>

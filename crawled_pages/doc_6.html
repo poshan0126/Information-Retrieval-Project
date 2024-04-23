@@ -1,0 +1,2103 @@
+
+
+
+
+
+
+
+
+    
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="google" content="notranslate" />
+        <meta http-equiv="Content-Language" content="en_US" />
+
+        <title>Dijkstra&#x27;s Shortest Path Algorithm | Brilliant Math &amp; Science Wiki</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+        <meta property="fb:app_id" content="326254770799145" />
+        <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/eommhbliilafdkodaijeejngbjiiaccl">
+        
+            
+                <meta property="al:ios:url" content="com.brilliant.Brilliant://wiki/dijkstras-short-path-finder/" />
+                <meta property="al:ios:app_store_id" content="913335252" />
+                <meta property="al:ios:app_name" content="Brilliant.org" />
+                <meta property="al:android:url" content="https://brilliant.org/wiki/dijkstras-short-path-finder/">
+                <meta property="al:android:package" content="org.brilliant.android">
+                <meta property="al:android:app_name" content="Brilliant">
+            
+            
+                <link rel="canonical" href="https://brilliant.org/wiki/dijkstras-short-path-finder/">
+            
+            
+            
+            <link rel="alternate" href="android-app://org.brilliant.android/http/brilliant.org/wiki/dijkstras-short-path-finder/">
+        
+
+        
+
+        
+
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-76x76-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-120x120-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-152x152-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-180x180-precomposed.png">
+
+        
+    <meta name="description"
+        content="One algorithm for finding the shortest path from a starting node to a target node in a weighted graph is Dijkstra’s algorithm. The algorithm creates a tree of shortest paths from the starting vertex, the source, to all other points in the graph. Dijkstra’s algorithm, published in 1959 and named after its creator Dutch computer scientist Edsger Dijkstra, can be applied on a weighted graph. The graph can either be directed or undirected. One …"
+    >
+    
+
+    
+
+
+
+    <meta property="og:type" content="website">
+
+
+
+    <meta property="og:title" content="Dijkstra&#x27;s Shortest Path Algorithm | Brilliant Math &amp; Science Wiki">
+
+
+
+    <meta property="og:description" content="One algorithm for finding the shortest path from a starting node to a target node in a weighted graph is Dijkstra’s algorithm. The algorithm creates a tree of shortest paths from the starting vertex, the source, to all other points in the graph. Dijkstra’s algorithm, published in 1959 and named after its creator Dutch computer scientist Edsger Dijkstra, can be applied on a weighted graph. The graph can either be directed or undirected. One …">
+
+
+
+
+    <meta property="og:image" content="https://brilliant.org/site_media/version-1a4dfc4f1b/images/open-graph/default.png">
+
+<meta property="og:image:alt" content="https://brilliant.org/site_media/version-1a4dfc4f1b/images/open-graph/default.png">
+
+<meta property="og:url" content="https://brilliant.org/wiki/dijkstras-short-path-finder/">
+
+
+
+
+
+<meta name="twitter:site" content="@brilliantorg">
+
+    <meta name="twitter:card" content="summary_large_image">
+
+
+
+        
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/site_media/build/dist/brilliant_desktop.cd44e34d0c9cc9576c8d.css" rel="stylesheet" media="all" type="text/css">
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/site_media/build/dist/wiki.5cbe01554aab153d79e8.css" rel="stylesheet" media="all" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
+
+
+
+
+
+
+  <link href="/site_media/build/dist/feed_page.6f8a9b46325681d357a8.css" rel="stylesheet" media="all" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        <!--[if lt IE 6]><script type="text/javascript">var ie_version = -1;</script><![endif]-->
+        <!--[if IE 6]><script type="text/javascript">var ie_version = 6;</script><![endif]-->
+        <!--[if IE 7]><script type="text/javascript">var ie_version = 7;</script><![endif]-->
+        <!--[if IE 8]><script type="text/javascript">var ie_version = 8;</script><![endif]-->
+        <!--[if IE 9]><script type="text/javascript">var ie_version = 9;</script><![endif]-->
+
+        
+        
+
+
+    <script type="text/javascript">
+        (function (w, loc) {
+            var u = /ds055uzetaobb\.cloudfront\.net|d18l82el6cdm1i\.cloudfront\.net/;
+            if(u.test(loc.host)){ w.location=loc.protocol+'//brilliant.org'+loc.pathname;}
+        })(window,window.location);
+    </script>
+
+
+        
+
+        <noscript>
+            <style>.cmp-deferred .no-js{display:block !important;}</style>
+        </noscript>
+
+    </head>
+
+        
+        <body class="no-js
+                
+                
+                
+                
+                
+                enable-remind-share-buttons
+                wiki-page logged-out instant-try-it-yourself
+                fonts
+                hdr-big"
+            data-is-mobile="false"
+            
+            data-app-version="0.0.0"
+            data-user="None"
+            data-media-host="https://ds055uzetaobb.cloudfront.net"
+            data-third-party-cookies-enabled="true">
+
+        
+        <!-- site_is_live -->
+        
+
+            
+            
+
+            
+
+            
+                
+                
+                    <div id="header" class="site-header refreshed-navbar">
+                        
+                            
+                                
+    
+        
+                                    <div id="logged-out-header" class="container">
+    <div class="col">
+        <a href="/">
+          <img
+            height="24"
+            src="/site_media/version-0/images/brilliant-wordmark-black.svg"
+            alt="Brilliant"
+          />
+        </a>
+    </div>
+
+    
+
+
+
+
+
+
+
+
+<div class="hdr-links has-navbar-icon">
+    <span class="hdr-link">
+        <a href="/home/" >
+          <svg class="navbar-icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_91_1939)">
+              <path d="M20.2832 9.37336L10.9098 0L1.53638 9.37336L2.71904 10.556L10.9098 2.36534L19.1005 10.556L20.2832 9.37336Z"  />
+              <path d="M4.1984 11.63L10.9096 4.93977L17.6208 11.63V20H13.4183L13.4183 13.3098L8.40061 13.3098L8.40061 20H4.1984V11.63Z"  />
+            </g>
+            <defs>
+              <clipPath id="clip0_91_1939"> <rect width="20" height="20" fill="white" transform="translate(0.536377)" /> </clipPath>
+            </defs>
+          </svg>
+          Home
+        </a>
+    </span>
+    <span class="hdr-link">
+        <a href="/courses/" class="">
+          <svg class="navbar-icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.73594 1.6H17.5359V16H19.1359V0H4.73594V1.6Z" />
+            <path d="M4.73594 15.2H10.3359V13.6H4.73594V15.2Z" />
+            <path d="M4.73594 6.39999H12.7359V11.2H4.73594V6.39999Z" />
+            <path fill-rule="evenodd"  clip-rule="evenodd"  d="M1.53613 20V3.2H15.9361V20H1.53613ZM3.13613 4.8H14.3361V18.4H3.13613V4.8Z"  />
+          </svg>
+          Courses
+        </a>
+    </span>
+    
+</div>
+
+
+    <div class="btns">
+        
+            <a href="https://brilliant.org/account/signup/?next=/wiki/dijkstras-short-path-finder/"
+                rel="nofollow"
+                class="btn signup-btn col-2 ax-click"
+                data-ax-id="clicked_signup_from_header"
+                data-ax-type="button"
+                data-controller="util/ui:genericSignupModal"
+                data-next="">
+                    Sign up
+            </a>
+
+            <a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+                rel="nofollow"
+                class="btn login-link col-2 ax-click"
+                data-ax-id="clicked_login_from_header"
+                data-ax-type="link"
+                data-controller="util/ui:genericSignupModal"
+                data-show-login="true"
+                data-next="">
+                    Log in
+            </a>
+        
+    </div>
+</div>
+
+                                
+    
+
+                            
+                        
+                    </div>
+                
+
+            
+
+            
+
+            <div
+    data-controller="app/vue:component"
+    data-component="BannerWrapper"
+    data-legacy-url="/wiki/dijkstras-short-path-finder/"
+    data-is-authenticated=false
+></div>
+
+
+            <div id="system-msgs" class="row clearfix">
+                
+                    
+
+                    
+
+                    
+                        
+                    
+                
+            </div>
+
+            <div id="post-header">
+                
+            </div>
+
+            <div id="wrapper"
+                 class="container clearfix"
+                 data-controller="">
+
+                
+                    
+                        <div
+  class="public-signup-modal-experiment modal hide"
+  id="signup-modal-generic"
+  data-controller="app/signup:signUpModal">
+  
+    <div class="public-signup-left col col-last public-signup-left-experiment" id="public-signup-tour">
+        
+        
+    </div>
+
+
+
+<div
+    class="public-signup-experiment show-signup"
+    id="public-signup"
+>
+    
+  
+        
+            <span class="css-sprite-signup-modal signup-modal-image"></span>
+        
+        
+            
+            <div class="text row">
+                The best way to learn math and computer science.
+            </div>
+            
+        
+    
+
+
+    <div
+        class="public-buttons row"
+        data-controller="app/solvables:preventSocialButtonDoubleClick"
+    >
+        <div class="login-buttons">
+            
+                
+                
+                
+                
+                
+                    
+
+<a href="https://brilliant.org/account/facebook/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="login-fb"
+    class="btn btn-f-b signup-social ax-click"
+    data-ax-id="clicked_login_from_generic_modal_facebook"
+    data-ax-type="button"
+    data-is_modal="true"
+    >
+        
+            <span class="fb css-sprite-index"></span>Log in with Facebook
+        
+</a>
+
+                
+                
+                
+                
+                
+            
+
+            
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/google/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="login-google"
+    class="btn btn-google signup-social ax-click"
+    data-ax-id="clicked_login_from_generic_modal_google"
+    data-ax-type="button"
+    data-is_modal="true"
+    >
+        
+            <span class="google css-sprite-index"></span>Log in with Google
+        
+</a>
+
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="problem-login-link"
+    class="btn btn-email ax-click"
+    data-ax-id="clicked_login_from_generic_modal_email"
+    data-ax-type="button"
+    data-is_modal="true"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Log in with email
+        
+</a>
+
+            
+            
+            
+            
+        </div>
+
+        <div class="signup-buttons">
+            
+                
+                
+                
+                
+                
+                    
+
+<a href="https://brilliant.org/account/facebook/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="signup-fb"
+    class="btn btn-f-b signup-social ax-click"
+    data-ax-id="clicked_signup_from_generic_modal_facebook"
+    data-ax-type="button"
+    >
+        
+            <span class="fb css-sprite-index"></span>Join using Facebook
+        
+</a>
+
+                
+                
+                
+                
+                
+            
+
+            
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/google/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="signup-google"
+    class="btn btn-google signup-social ax-click"
+    data-ax-id="clicked_signup_from_generic_modal_google"
+    data-ax-type="button"
+    >
+        
+            <span class="google css-sprite-index"></span>Join using Google
+        
+</a>
+
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/signup/?signup=true&next=/wiki/dijkstras-short-path-finder/"
+    id="signup-email"
+    class="btn btn-email ax-click"
+    data-ax-id="clicked_signup_from_generic_modal_email"
+    data-ax-type="button"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Join using email
+        
+</a>
+
+            
+            
+            
+            
+        </div>
+    </div>
+
+    
+  <div
+    class="signup-form-container"
+    id="signup-form-container"
+    data-url="/signup_form"
+    data-page-key="wiki_canonical_page"
+  ></div>
+
+  <div
+    class="login-form-container row"
+    id="login-form-container"
+    data-url="/login_form"
+    data-page-key="wiki_canonical_page"
+  ></div>
+
+
+    <div class="alternative">
+        <div class="login-alternative">
+            <p>
+              <a href="/account/password/reset/" class="btn-link forget">Forgot password?</a>
+              New user?
+                
+                
+                    
+
+<a href="https://brilliant.org/account/signup/?signup=true&next=/wiki/dijkstras-short-path-finder/"
+    id="problem-signup-link-alternative"
+    class="btn-link ax-click"
+    data-ax-id="clicked_signup_from_generic_modal"
+    data-ax-type="button"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Sign up
+        
+</a>
+
+                
+                
+            </p>
+        </div>
+
+        <div class="signup-alternative">
+            <p>Existing user?
+                
+                
+                    
+
+<a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="problem-login-link-alternative"
+    class="btn-link ax-click"
+    data-ax-id="clicked_login_from_generic_modal"
+    data-ax-type="button"
+    data-is_modal="true"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Log in
+        
+</a>
+
+                
+                
+            </p>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+                    
+                
+
+                
+    <div class="col col-12 col-last wiki-main-column">
+
+        <header id="wiki-header" class="wiki-header">
+    
+        <div class="pull-right">
+            
+            
+
+            
+        </div>
+    
+
+    <h1>Dijkstra&#x27;s Shortest Path Algorithm</h1>
+</header>
+
+
+    
+
+<div class="signup-modal hide">
+
+    <div class="modal-bg"></div>
+
+    
+        <div class="modal-content">
+            <div class="buttons">
+                <a href="https://brilliant.org/account/facebook/login/?next=/wiki/dijkstras-short-path-finder/"
+                    class="btn signup-fb ax-click"
+                    data-ax-id="clicked_signup_modal_facebook"
+                    data-ax-type="button">
+                        Sign up with Facebook</a>
+                <span class="or">or</span>
+                <a href="https://brilliant.org/account/signup/?signup=true&next=/wiki/dijkstras-short-path-finder/"
+                    class="btn signup-email ax-click"
+                    data-ax-id="clicked_signup_modal_email"
+                    data-ax-type="button">
+                        Sign up manually</a>
+            </div>
+            <div class="alternative">
+                <p>
+                    Already have an account?
+                    <a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+                        class="ax-click"
+                        data-ax-id="clicked_signup_modal_login"
+                        data-ax-type="link">
+                            Log in here.
+                    </a>
+                </p>
+            </div>
+        </div>
+    
+
+</div>
+
+
+
+
+        
+
+
+
+    <div
+        class="col col-4 col-right wiki-sidebar sidebar loggedout expanded"
+        id="wiki-sidebar"
+        data-controller=""
+    >
+
+        
+
+        
+            <div class="wiki-recommended-courses row">
+                <h4>
+                    Recommended Course
+                    
+                </h4>
+
+                <ul class="unstyled row">
+                    
+                        <li>
+                            
+                                <a href="/courses/advanced-algorithms/">
+                                    <style>#bg-c57c273b1c { background-image: url(https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=100); }
+
+            @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
+                #bg-c57c273b1c { background-image: url(https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=200); }
+            }
+        
+
+            @media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
+                #bg-c57c273b1c { background-image: url(https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=300); }
+            }
+        </style>
+<span class="img" id="bg-c57c273b1c"></span>
+                                    <div>
+                                        <h3>Advanced Algorithms</h3>
+                                        <p>Complexity theory, randomized algorithms, graphs, and more.</p>
+                                    </div>
+                                </a>
+                            
+                        </li>
+                    
+                </ul>
+            </div>
+        
+    </div>
+
+
+
+        
+            <div class="wiki-top-editors" id="cmp_wiki_top_editors_id">
+                
+
+    
+        <a href="/profile/thaddeus-kcchug/about/"
+            class="btn-profile mini-profile"
+            data-id="znw0keo8tbFIAkvPwIsjgKB5yxJEoiBB"
+            rel="nofollow">
+                Thaddeus Abiy</a>,
+        
+    
+        <a href="/profile/hannah-1synyo/about/"
+            class="btn-profile mini-profile"
+            data-id="gb1Iz1wME6prog9WzAQAtOjyDhSt9Qqa"
+            rel="nofollow">
+                Hannah Pang</a>,
+        
+    
+        <a href="/profile/christopher-i6sq4v/about/"
+            class="btn-profile mini-profile"
+            data-id="dAIvk8FEgZhSNwQOagA8HXofxPM2qdtz"
+            rel="nofollow">
+                Christopher Williams</a>,
+        
+    
+
+    
+        and
+        <div class="dropdown tipsy">
+            <button class="btn-link dropdown-toggle" data-toggle="dropdown">
+                2 others
+            </button>
+            <ul class="dropdown-menu">
+                
+                    <li>
+                        <a href="/profile/jimin-hqyzve/about/"
+                            class="mini-profile"
+                            data-id="sFxPAbPDtKOIiquGfMHdp279pk40JIS5"
+                            rel="nofollow">
+                                Jimin Khim
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/profile/eli-oyeeys/about/"
+                            class="mini-profile"
+                            data-id="1Ogyx9vCZon1L1msTClMgybPmQFVMRl7"
+                            rel="nofollow">
+                                Eli Ross
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+    contributed
+
+
+            </div>
+        
+
+        
+
+
+        <div id="wiki-main" data-controller="app/newsfeed:feed">
+            
+
+
+
+
+
+            
+
+            <div class="summary-container" id="cmp_wiki_canonical_page_id">
+                
+
+    <div class="summary wiki-content"
+            data-controller="app/wiki:summary,app/zoomable:images"
+            data-cmp-url="/wiki/dijkstras-short-path-finder/"
+            data-page-key="wiki_canonical_page"
+            data-cmp-key="wiki_canonical_page">
+        
+
+        
+
+        <div class="section collapsed" id="section-pre-header-section"><div class="section-container"><p>One algorithm for finding the shortest path from a starting node to a target node in a weighted graph is Dijkstra’s algorithm. The  <a href="/wiki/algorithms/?wiki_title=algorithm" class="wiki_link new" title="page not yet created"target="_blank" rel="nofollow">algorithm</a> creates a <a href="/wiki/trees-basic/" class="wiki_link" title="tree"target="_blank">tree</a> of shortest paths from the starting vertex, the source, to all other points in the graph. </p>
+
+<p>Dijkstra’s algorithm, published in 1959 and named after its creator Dutch computer scientist Edsger Dijkstra, can be applied on a weighted <a href="/wiki/graphs-basic/" class="wiki_link" title="graph"target="_blank">graph</a>. The graph can either be directed or undirected. One stipulation to using the algorithm is that the graph needs to have a nonnegative weight on every edge.</p>
+
+<p><span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/lessons/dijkstra-EQ50NN.gif"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/lessons/dijkstra-EQ50NN.gif 1x"
+                                        alt="Dijkstra's algorithm in action on a non-directed graph  " />
+                                <span class="caption">Dijkstra's algorithm in action on a non-directed graph <sup><a href="#citation-1" class="citation-link">[1]</a></sup> </span></span> </p>
+
+<p>Suppose a student wants to go from home to school in the shortest possible way. She knows some roads are heavily congested and difficult to use. In Dijkstra's algorithm, this means the edge has a large weight--the shortest path tree found by the algorithm will try to avoid edges with larger weights. If the student looks up directions using a map service, it is likely they may use Dijkstra's algorithm, as well as others.   </p>
+
+<blockquote class="example"><p>
+Find the shortest path from home to school in the following graph:</p>
+
+<p><span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/I9VAzKk2VV-screen-shot-2016-04-27-at-22045-pm.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/I9VAzKk2VV-screen-shot-2016-04-27-at-22045-pm.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/I9VAzKk2VV-screen-shot-2016-04-27-at-22045-pm.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/I9VAzKk2VV-screen-shot-2016-04-27-at-22045-pm.png?width=3600 3x"
+                                        alt=" A weighted graph representing roads from home to school   " />
+                                <span class="caption"> A weighted graph representing roads from home to school <sup><a href="#citation-2" class="citation-link">[2]</a></sup>  </span></span></p>
+
+<hr />
+
+<p>The shortest path, which could be found using Dijkstra's algorithm, is</p>
+
+<p>\[\text{Home} \rightarrow B  \rightarrow D \rightarrow F \rightarrow \text{School}.\ _\square\]
+</p><!-- end-example --></blockquote>
+
+</div>
+</div>
+
+    <div class="toc wiki-toc">
+        <h4>Contents</h4>
+        <ul class="unstyled">
+            
+                <li>
+                    <a href="#dijkstras-algorithm">Dijkstra&#x27;s Algorithm</a>
+                </li>
+            
+                <li>
+                    <a href="#implementation">Implementation</a>
+                </li>
+            
+                <li>
+                    <a href="#examples">Examples</a>
+                </li>
+            
+                <li>
+                    <a href="#references">References</a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+<div id="dijkstras-algorithm" class="anchor skill-heading collapsed" data-controller="app/wiki:expandOrCollapse">
+    <header class="section-header">
+        <span class="css-sprite-chevrons chevron"></span>
+        <h2>Dijkstra&#x27;s Algorithm</h2>
+
+        
+    </header>
+</div>
+
+<div class="section collapsed" id="section-dijkstras-algorithm"><div class="section-container">
+
+<p>Dijkstra’s algorithm finds a shortest path tree from a single source node, by building a set of nodes that have minimum distance from the source. </p>
+
+<p><span class="image-caption right">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=3600 3x"
+                                        alt="Graph  " />
+                                <span class="caption">Graph <sup><a href="#citation-3" class="citation-link">[3]</a></sup> </span></span></p>
+
+<p>The graph has the following: </p>
+
+<ul>
+<li>vertices, or nodes, denoted in the algorithm by \(v\) or \(u\);</li>
+<li>weighted edges that connect two nodes: (\(u,v\)) denotes an edge, and \(w(u,v)\) denotes its weight. In the diagram on the right, the weight for each edge is written in gray.</li>
+</ul>
+
+<p>This is done by initializing three values: </p>
+
+<ul>
+<li>\(dist\), an array of distances from the source node \(s\) to each node in the graph, initialized the following way: \(dist\)(\(s\)) = 0; 
+and for all other nodes \(v\), \(dist\)(\(v\)) = \(\infty\). 
+This is done at the beginning because as the algorithm proceeds, the \(dist\) from the source to each node \(v\) in the graph will be recalculated and finalized when the shortest distance to \(v\) is found</li>
+<li>\(Q\), a <a href="/wiki/queues-basic/" class="wiki_link" title="queue"target="_blank">queue</a> of all nodes in the graph. At the end of the algorithm's progress, \(Q\) will be empty. </li>
+<li>\(S\), an empty <a href="/wiki/sets/" class="wiki_link" title="set"target="_blank">set</a>, to indicate which nodes the algorithm has visited. At the end of the algorithm's run, \(S\) will contain all the nodes of the graph. </li>
+</ul>
+
+<p>The algorithm proceeds as follows: </p>
+
+<ol>
+<li>While \(Q\) is not empty, pop the node \(v\), that is not already in \(S\), from \(Q\) with the smallest \(dist\) (\(v\)). In the first run, source node \(s\) will be chosen because \(dist\)(\(s\)) was initialized to 0. In the next run, the next node with the smallest \(dist\) value is chosen.</li>
+<li>Add node \(v\) to \(S\), to indicate that \(v\) has been visited</li>
+<li>Update \(dist\) values of adjacent nodes of the current node \(v\) as follows: for each new adjacent node \(u\),</li>
+</ol>
+
+<ul>
+<li>if  \(dist\) (\(v\)) + \(weight(u,v)\) &lt;  \(dist\) (\(u\)), there is a new minimal distance found for \(u\), so update \(dist\) (\(u\)) to the new minimal distance value;</li>
+<li>otherwise, no updates are made to \(dist\) (\(u\)).</li>
+</ul>
+
+<p>The algorithm has visited all nodes in the graph and found the smallest distance to each node. \(dist\) now contains the shortest path tree from source \(s\).</p>
+
+<p>Note: The weight of an edge (\(u,v\)) is taken from the value associated with (\(u,v\)) on the graph.</p>
+
+</div>
+</div>
+
+<div id="implementation" class="anchor skill-heading collapsed" data-controller="app/wiki:expandOrCollapse">
+    <header class="section-header">
+        <span class="css-sprite-chevrons chevron"></span>
+        <h2>Implementation</h2>
+
+        
+    </header>
+</div>
+
+<div class="section collapsed" id="section-implementation"><div class="section-container">
+
+<p>This is pseudocode for Dijkstra's algorithm, mirroring Python syntax. It can be used in order to implement the algorithm in any language.</p>
+
+<div class="codex-static-code" data-controller="app/codex/controllers:expandableCode"><button class="codex-expand-toggle" style="display:none;"></button><table class="has-lang codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="has-lang codehilite"><pre><span></span><code data-lang="Python"><span class="n">function</span> <span class="n">Dijkstra</span><span class="p">(</span><span class="n">Graph</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+       <span class="n">dist</span><span class="p">[</span><span class="n">source</span><span class="p">]</span>  <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>                     <span class="o">//</span> <span class="n">Distance</span> <span class="kn">from</span> <span class="nn">source</span> <span class="n">to</span> <span class="n">source</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="mi">0</span>
+       <span class="k">for</span> <span class="n">each</span> <span class="n">vertex</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Graph</span><span class="p">:</span>            <span class="o">//</span> <span class="n">Initializations</span>
+           <span class="k">if</span> <span class="n">v</span> <span class="err">≠</span> <span class="n">source</span>
+               <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>  <span class="p">:</span><span class="o">=</span> <span class="n">infinity</span>           <span class="o">//</span> <span class="n">Unknown</span> <span class="n">distance</span> <span class="n">function</span> <span class="kn">from</span> <span class="nn">source</span> <span class="n">to</span> <span class="n">each</span> <span class="n">node</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">infinity</span>
+           <span class="n">add</span> <span class="n">v</span> <span class="n">to</span> <span class="n">Q</span>                         <span class="o">//</span> <span class="n">All</span> <span class="n">nodes</span> <span class="n">initially</span> <span class="ow">in</span> <span class="n">Q</span>
+
+      <span class="k">while</span> <span class="n">Q</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">empty</span><span class="p">:</span>                  <span class="o">//</span> <span class="n">The</span> <span class="n">main</span> <span class="n">loop</span>
+          <span class="n">v</span> <span class="p">:</span><span class="o">=</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">Q</span> <span class="k">with</span> <span class="nb">min</span> <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>  <span class="o">//</span> <span class="n">In</span> <span class="n">the</span> <span class="n">first</span> <span class="n">run</span><span class="o">-</span><span class="n">through</span><span class="p">,</span> <span class="n">this</span> <span class="n">vertex</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">source</span> <span class="n">node</span>
+          <span class="n">remove</span> <span class="n">v</span> <span class="kn">from</span> <span class="nn">Q</span> 
+
+          <span class="k">for</span> <span class="n">each</span> <span class="n">neighbor</span> <span class="n">u</span> <span class="n">of</span> <span class="n">v</span><span class="p">:</span>           <span class="o">//</span> <span class="n">where</span> <span class="n">neighbor</span> <span class="n">u</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">yet</span> <span class="n">been</span> <span class="n">removed</span> <span class="kn">from</span> <span class="nn">Q.</span>
+              <span class="n">alt</span> <span class="p">:</span><span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+</span> <span class="n">length</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+              <span class="k">if</span> <span class="n">alt</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>               <span class="o">//</span> <span class="n">A</span> <span class="n">shorter</span> <span class="n">path</span> <span class="n">to</span> <span class="n">u</span> <span class="n">has</span> <span class="n">been</span> <span class="n">found</span>
+                  <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>  <span class="p">:</span><span class="o">=</span> <span class="n">alt</span>            <span class="o">//</span> <span class="n">Update</span> <span class="n">distance</span> <span class="n">of</span> <span class="n">u</span> 
+
+      <span class="k">return</span> <span class="n">dist</span><span class="p">[]</span>
+  <span class="n">end</span> <span class="n">function</span>
+</code></pre></div>
+
+<p></td></tr></table></div></p>
+
+</div>
+</div>
+
+<div id="examples" class="anchor skill-heading collapsed" data-controller="app/wiki:expandOrCollapse">
+    <header class="section-header">
+        <span class="css-sprite-chevrons chevron"></span>
+        <h2>Examples</h2>
+
+        
+    </header>
+</div>
+
+<div class="section collapsed" id="section-examples"><div class="section-container">
+
+<blockquote class="example"><p>
+We step through Dijkstra's algorithm on the graph used in the algorithm above:</p>
+
+<ol>
+<li><p>Initialize distances according to the algorithm.
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ydOEDFABWr-graph1.png?width=3600 3x"
+                                        alt="  " />
+                                <span class="caption"> <sup><a href="#citation-3" class="citation-link">[3]</a></sup> </span></span></p></li>
+<li><p>Pick first node and calculate distances to adjacent nodes.
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/xCs8HLWjND-graph2.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/xCs8HLWjND-graph2.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/xCs8HLWjND-graph2.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/xCs8HLWjND-graph2.png?width=3600 3x"
+                                        alt="  " />
+                                <span class="caption"> <sup><a href="#citation-4" class="citation-link">[4]</a></sup> </span></span></p></li>
+<li><p>Pick next node with minimal distance; repeat adjacent node distance calculations.
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/hbvae0irEm-graph3.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/hbvae0irEm-graph3.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/hbvae0irEm-graph3.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/hbvae0irEm-graph3.png?width=3600 3x"
+                                        alt="  " />
+                                <span class="caption"> <sup><a href="#citation-5" class="citation-link">[5]</a></sup> </span></span></p></li>
+<li><p>Final result of shortest-path tree
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/bW1sDrFu5l-graph4.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/bW1sDrFu5l-graph4.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/bW1sDrFu5l-graph4.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/bW1sDrFu5l-graph4.png?width=3600 3x"
+                                        alt="  " />
+                                <span class="caption"> <sup><a href="#citation-6" class="citation-link">[6]</a></sup> </span></span></p></li>
+</ol>
+
+<!-- end-example --></blockquote><p> </p>
+
+<blockquote class="example"><p>
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ex2V1uxxGs-cde30e75cd3cb1ca863b625b694f4bea7afa8cb0.png?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/ex2V1uxxGs-cde30e75cd3cb1ca863b625b694f4bea7afa8cb0.png?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ex2V1uxxGs-cde30e75cd3cb1ca863b625b694f4bea7afa8cb0.png?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/ex2V1uxxGs-cde30e75cd3cb1ca863b625b694f4bea7afa8cb0.png?width=3600 3x"
+                                        alt="Question" />
+                                <span class="caption">Question</span></span></p>
+
+<p>Run Dijkstra's on the following graph and determine the resulting shortest path tree.</p>
+
+<hr />
+
+<p>Dijkstra will visit the vertices in the following order: \(S,C,A,D,F,E,B\). The closer edges will be relaxed first. As a result, the parent of each node is as follows: 
+<span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/wsLyNyVqzN-image.PNG?width=1200"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/wsLyNyVqzN-image.PNG?width=1200 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/wsLyNyVqzN-image.PNG?width=2400 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/wsLyNyVqzN-image.PNG?width=3600 3x"
+                                        alt="Solution" />
+                                <span class="caption">Solution</span></span></p>
+
+<!-- end-example --></blockquote>
+
+<p>
+
+
+
+    <div class="problem-modal-container anchor"
+        id="problem-help-sally"
+         data-controller="app/solvables:wikiModalProblem">
+
+        <div class="load-modal wiki-problem"
+            
+            
+            data-full-url="/problems/help-sally/"
+            data-public-url="/problems/help-sally/"
+            data-modal-url="/problems/modal/help-sally/"
+            data-is-solvable="true">
+
+            <div class="problem-container">
+                <a target="_blank" href="/problems/help-sally/"
+                    class="modal-link link-overlay ax-click"
+                    data-ax-type="button"
+                    data-ax-id="clicked_embedded_problem"></a>
+
+                
+
+                
+                    <div class="answer-container solv-details">
+
+                        
+                            
+                                <button class="btn btn-accent btn-submit">Submit your answer</button>
+                            
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+<div class="question-container">
+    
+        
+        <p><span class="image-caption center">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/solvable/b12597a970.d351956617.ZqXjga.jpg?width=250"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/solvable/b12597a970.d351956617.ZqXjga.jpg?width=250 1x,https://ds055uzetaobb.cloudfront.net/brioche/solvable/b12597a970.d351956617.ZqXjga.jpg?width=500 2x,https://ds055uzetaobb.cloudfront.net/brioche/solvable/b12597a970.d351956617.ZqXjga.jpg?width=750 3x"
+                                        alt="" style="width:250px;max-width:100%;" />
+                                </span></p>
+
+<p>Sally is a very bad skater, so she can only skate in one direction! But Sally still wants to find her dad in the least amount of moves possible so that she can get off the ice. Sally's only way of stopping is (crashing into) walls or the edge of the ice rink.</p>
+
+<p><span class="image-caption right">
+                                    <img
+                                        src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/hOEWqwswsP-vlfvcxk.png?height=600"
+                                        srcset="https://ds055uzetaobb.cloudfront.net/brioche/uploads/hOEWqwswsP-vlfvcxk.png?height=600 1x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/hOEWqwswsP-vlfvcxk.png?height=1200 2x,https://ds055uzetaobb.cloudfront.net/brioche/uploads/hOEWqwswsP-vlfvcxk.png?height=1800 3x"
+                                        alt="" style="max-height:600px;max-width:100%;" />
+                                </span></p>
+
+<p>We describe the ice rink using the following notation:   </p>
+
+<p>(#) -- Wall <br />
+(.) -- Free space <br />
+(S) -- Sally's starting position <br />
+(D) -- Dad's position.</p>
+
+<p>For example, in the ice rink at right, the shortest path is 18 steps.</p>
+
+<p>Here is a text file of 5 ice rinks of size \( 20 \times 20 \). The rinks are separated by hyphens.</p>
+
+<p><strong>Find the sum of the shortest paths</strong> of these five \( 20 \times 20 \) ice rinks.</p>
+
+<p>Note: Sally has to stop at her father's position. She will slide past him if there are no walls.</p>
+
+<h6>Image credit: Flickr Saad Akhtar</h6>
+
+    
+</div>
+
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+</p>
+</div>
+</p>
+</div>
+
+<div id="references" class="anchor skill-heading collapsed" data-controller="app/wiki:expandOrCollapse">
+    <header class="section-header">
+        <span class="css-sprite-chevrons chevron"></span>
+        <h2>References</h2>
+
+        
+    </header>
+</div>
+
+<div class="section collapsed" id="section-references"><div class="section-container"><p><ol><li id="citation-1">
+    
+    
+    Skiena, S.
+
+    <em>Dijkstra&#x27;s Algorithm Animation</em>.
+    Retrieved
+    April 22, 2016,
+    from
+    <a href="http://www3.cs.stonybrook.edu/~skiena/combinatorica/animations/anim/dijkstra.gif">http://www3.cs.stonybrook.edu/~skiena/combinatorica/animations/anim/dijkstra.gif</a>
+</li>
+<li id="citation-2">
+    
+    
+    Hall, A.
+
+    <em>How to use Dijkstra&#x27;s algorithm</em>.
+    Retrieved
+    April 27, 2016,
+    from
+    <a href="https://www.youtube.com/watch?v=Cjzzx3MvOcU">https://www.youtube.com/watch?v=Cjzzx3MvOcU</a>
+</li>
+<li id="citation-3">
+    
+    
+    Hazzard, E.
+
+    <em>Tutorial</em>.
+    Retrieved
+    April 24, 2016,
+    from
+    <a href="http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path2\&lt;em&gt;1\&lt;/em&gt;a\_selected.png">http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path2\&lt;em&gt;1\&lt;/em&gt;a\_selected.png</a>
+</li>
+<li id="citation-4">
+    
+    
+    Hazzard, E.
+
+    <em>Tutorial</em>.
+    Retrieved
+    April 24, 2016,
+    from
+    <a href="http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path2\&lt;em&gt;1\&lt;/em&gt;a\&lt;em&gt;selected\&lt;/em&gt;3.png">http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path2\&lt;em&gt;1\&lt;/em&gt;a\&lt;em&gt;selected\&lt;/em&gt;3.png</a>
+</li>
+<li id="citation-5">
+    
+    
+    Hazzard, E.
+
+    <em>Tutorial</em>.
+    Retrieved
+    April 24, 2016,
+    from
+    <a href="http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path3\_2.png">http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path3\_2.png</a>
+</li>
+<li id="citation-6">
+    
+    
+    Hazzard, E.
+
+    <em>Tutorial</em>.
+    Retrieved
+    April 24, 2016,
+    from
+    <a href="http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path\_final.png">http://vasir.net/static/tutorials/shortest\&lt;em&gt;path/shortest\&lt;/em&gt;path\_final.png</a>
+</li></ol></div>
+</div>
+    </div>
+
+
+
+
+            </div>
+        </div>
+
+        
+            <div class="wiki-self-citation" data-controller="app/wiki:getCitationTime">
+                <strong>Cite as:</strong>
+                Dijkstra&#x27;s Shortest Path Algorithm.
+                <em>Brilliant.org</em>.
+                Retrieved<span class="retrieval-time"> </span>from
+                <a href="https://brilliant.org/wiki/dijkstras-short-path-finder/">https://brilliant.org/wiki/dijkstras-short-path-finder/</a>
+            </div>
+
+            <script type="text/template" id="retrieval-time-content">
+                <%- hour %>:<%- minute %>, <%- month %> <%- day %>, <%- year %>,
+            </script>
+        
+
+        <div class="wiki-rating-feedback-wrapper row" data-controller="app/wiki:feedback">
+            
+
+            
+        </div>
+
+    </div>
+
+    <div class="wiki-overlay"></div>
+
+    
+
+    
+
+    
+        
+<div class="wiki-footer recommended-course"
+    id="loggedout-wiki-footer"
+    data-controller="app/wiki:showSignUpModal,app/wiki:wikiFooter">
+
+    
+        
+        
+        
+            
+
+<a
+    href="/courses/advanced-algorithms/"
+    class="course-banner ax-click"
+    data-ax-id="wiki_clicked_course_footer_logged_out"
+>
+    <div class="img col">
+        <img class="no-zoom" src="https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=100" srcset="https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=100 1x, https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=200 2x, https://ds055uzetaobb.cloudfront.net/brioche/chapter/CS%20-%20Advanced%20Algorithms-ERFhDa.png?width=300 3x">
+    </div>
+
+    <div class="text col col-5">
+        <h4>Master concepts like these</h4>
+        <button class="btn btn-accent">Get started</button>
+        <p>Learn more in our Advanced Algorithms course, built by experts for you.</p>
+    </div>
+</a>
+
+        
+        
+        
+    
+</div>
+        <div
+  class="public-signup-modal-experiment modal hide"
+  id="signup-modal-wiki"
+  data-controller="app/signup:signUpModal">
+  
+    <div class="public-signup-left col col-last public-signup-left-experiment" id="public-signup-tour">
+        
+        
+    </div>
+
+
+
+<div
+    class="public-signup-experiment show-signup"
+    id="public-signup"
+>
+    
+  
+        
+            <span class="css-sprite-signup-modal signup-modal-image"></span>
+        
+        
+            <div class="text row">
+                Sign up to read all wikis and quizzes in math, science, and engineering topics.
+            </div>
+        
+    
+
+
+    <div
+        class="public-buttons row"
+        data-controller="app/solvables:preventSocialButtonDoubleClick"
+    >
+        <div class="login-buttons">
+            
+                
+                
+                
+                
+                
+                    
+
+<a href="https://brilliant.org/account/facebook/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="login-fb"
+    class="btn btn-f-b signup-social ax-click"
+    data-ax-id="clicked_login_from_problem_modal_facebook"
+    data-ax-type="button"
+    data-is_modal="true"
+    >
+        
+            <span class="fb css-sprite-index"></span>Log in with Facebook
+        
+</a>
+
+                
+                
+                
+                
+                
+            
+
+            
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/google/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="login-google"
+    class="btn btn-google signup-social ax-click"
+    data-ax-id="clicked_login_from_problem_modal_google"
+    data-ax-type="button"
+    data-is_modal="true"
+    >
+        
+            <span class="google css-sprite-index"></span>Log in with Google
+        
+</a>
+
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="problem-login-link"
+    class="btn btn-email ax-click"
+    data-ax-id="clicked_login_from_problem_modal_email"
+    data-ax-type="button"
+    data-is_modal="true"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Log in with email
+        
+</a>
+
+            
+            
+            
+            
+        </div>
+
+        <div class="signup-buttons">
+            
+                
+                
+                
+                
+                
+                    
+
+<a href="https://brilliant.org/account/facebook/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="signup-fb"
+    class="btn btn-f-b signup-social ax-click"
+    data-ax-id="clicked_signup_from_problem_modal_facebook"
+    data-ax-type="button"
+    >
+        
+            <span class="fb css-sprite-index"></span>Join using Facebook
+        
+</a>
+
+                
+                
+                
+                
+                
+            
+
+            
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/google/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="signup-google"
+    class="btn btn-google signup-social ax-click"
+    data-ax-id="clicked_signup_from_problem_modal_google"
+    data-ax-type="button"
+    >
+        
+            <span class="google css-sprite-index"></span>Join using Google
+        
+</a>
+
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+                
+
+<a href="https://brilliant.org/account/signup/?signup=true&next=/wiki/dijkstras-short-path-finder/"
+    id="signup-email"
+    class="btn btn-email ax-click"
+    data-ax-id="clicked_signup_from_problem_modal_email"
+    data-ax-type="button"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Join using email
+        
+</a>
+
+            
+            
+            
+            
+        </div>
+    </div>
+
+    
+  <div
+    class="signup-form-container"
+    id="signup-form-container"
+    data-url="/signup_form"
+    data-page-key="wiki_canonical_page"
+  ></div>
+
+  <div
+    class="login-form-container row"
+    id="login-form-container"
+    data-url="/login_form"
+    data-page-key="wiki_canonical_page"
+  ></div>
+
+
+    <div class="alternative">
+        <div class="login-alternative">
+            <p>
+              <a href="/account/password/reset/" class="btn-link forget">Forgot password?</a>
+              New user?
+                
+                
+                    
+
+<a href="https://brilliant.org/account/signup/?signup=true&next=/wiki/dijkstras-short-path-finder/"
+    id="problem-signup-link-alternative"
+    class="btn-link ax-click"
+    data-ax-id="clicked_signup_from_problem_modal"
+    data-ax-type="button"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Sign up
+        
+</a>
+
+                
+                
+            </p>
+        </div>
+
+        <div class="signup-alternative">
+            <p>Existing user?
+                
+                
+                    
+
+<a href="https://brilliant.org/account/login/?next=/wiki/dijkstras-short-path-finder/"
+    id="problem-login-link-alternative"
+    class="btn-link ax-click"
+    data-ax-id="clicked_login_from_problem_modal"
+    data-ax-type="button"
+    data-is_modal="true"
+    
+        data-next="/wiki/dijkstras-short-path-finder/"
+    >
+        
+            Log in
+        
+</a>
+
+                
+                
+            </p>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+    
+
+
+    
+
+    <div data-controller="util/latex_loader:controller"></div>
+
+    
+
+
+<div data-controller="util/analytics:init"
+    data-analytics-live="true"
+    data-segment-key="ttlCaHQqOWtslnGGJ9W4bBeRpfYGksuD"
+    data-segment-url="https://in.brilliant.org"
+    data-amplitude-key="2d768258f0a7507203c7998a3e2678f0"
+    
+    
+    data-analytics-identity="BHJvEU6UfBkrYjAnBOZ58mgY3xM8fDZw"
+    data-analytics-super-properties='{"locale": "en", "account_type": "anonymous", "debug": false, "client": "desktop-browser", "sessionid": null, "user_agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", "identity": "BHJvEU6UfBkrYjAnBOZ58mgY3xM8fDZw", "anon_ident_latest": "BHJvEU6UfBkrYjAnBOZ58mgY3xM8fDZw", "ab_test__send_startalk_welcome_email_04_2018": true, "ab_test__reduce_nux_email_volumes_2018_08": true}'
+    data-analytics-user-properties='{"exp__checkout_hosting_mature_monthly_1_2024": "control", "exp__paywall_rewrite_trial_10_2023": "control", "exp__ios_endstate_notifications_optins_09_2023_v2": "control", "exp__launch_leagues_2022_07": "experiment", "exp__lohp_header_copy_02_2024": "control", "exp__ios_trial_paywall_refresh_04_2023": "experiment", "exp__branded_paywall_international_12_2023": "experiment", "exp__ios_trial_paywall_04_2022": "experiment", "exp__endstate_simplification_2022_10": "control", "exp__rewrite_trial_paywall_v3_01_2024": "control", "exp__leagues_onboarding_2022_09": "control", "exp__content_impact_programming2_lp_7_22": "experiment", "exp__streak_award_challenge_2022_12": "control", "exp__cutgeofundmathlearning2_202210": "experiment", "exp__xp_per_solvable_2023_01": "control", "exp__leagues_based_xp_per_solvable_2023_01": "control", "exp__data_analysis_nux_2023_02": "control", "exp__rm_offline_mode_ref_mobile_09_2022": "experiment", "exp__ios_notifications_optins_09_2022": "control", "exp__envelope_keyboard_layout_2023_09": "control", "exp__learning_path_redesign_02_2023": "control", "exp__test_your_understanding_03_2023": "experiment", "exp__new_mobile_runtime_wrapper_02_2022": "experiment", "exp__full_screen_interactive_text_2023_01": "experiment1", "exp__endstate_routing_2023_02": "control", "exp__learning_path_redesign_03_2023": "control", "exp__course_page_practice_redesign_11_2022": "experiment", "exp__cutgeofundmathlearning3_202210": "control", "exp__mobile_continue_button_flow_2023_02": "control", "exp__enable_organic_rux_09_2023": "experiment", "exp__ios_endstate_notifications_optins_09_2023": "control", "exp__android_trial_paywall_refresh_04_2023": "experiment", "exp__three_month_plan_2024_01": "experiment", "exp__um_hard_tag_removal_08_23": "experiment", "exp__ios_nux_notifications_optins_02_2023": "control", "exp__ios_alter_signup_nux_flow_0323": "both_combined", "exp__envelope_keyboard_layout_2023_09_v2": "control", "exp__llp_rollout_04_2023": "control", "exp__demo_loco_experiment_20230731": "control", "exp__embedded_checkout_2023_12": "control", "exp__um_streak_charge_nov_2023": "experiment", "exp__show_practice_problems_2023_03": "control", "exp__programming_learning_path_start_03_2023": "experiment", "exp__pro_pricing_2023_09_v2": "control", "exp__um_homepage_reorg_2023_09": "control", "exp__extend_streak_on_content_completion": "control", "exp__stripe_embedded_checkout_2023_10": "control", "exp__ios_nux_notifications_optins_05_2023": "experiment", "exp__um_llp_nux_recs_05_2023": "control", "exp__returning_ux_mobile_improvements_02_2023": "experiment_no_home", "exp__mobile_to_desktop_experiment": "control", "exp__android_alter_signup_nux_flow_0323": "both_combined", "exp__llp_in_product_2023_06": "experiment", "exp__mobile_continue_button_flow_2023_03": "experiment", "exp__llp_rollout_05_2023": "control", "exp__llp_new_recs_05_2023": "experiment", "exp__ios_prenux_green_button_05_2023": "control", "exp__um_llp_nux_routing_05_2023": "variant", "exp__streak_and_leagues_sounds_08_2023": "control", "exp__lightweight_lesson_practice_09_2023": "control", "exp__practice_node_2023_08": "experiment", "exp__trial_embedded_checkout_paypal_1_2024": "show_paypal", "exp__um_homepage_reorg_v2_2023_10": "control", "exp__branded_embedded_checkout_2023_11": "light_paywall_stripe_hosted_checkout", "exp__trial_embedded_checkout_1_2024": "experiment", "exp__embedded_checkout_paypal_1_2024": "show_paypal", "exp__course_deletion_v1_02_2024": "control", "exp__android_mature_paywall_redesign_1223": "control", "exp__branded_embedded_checkout_2023_11_v2": "dark_paywall_embedded_checkout", "exp__rewrite_trial_paywall_v4_01_2024": "control", "exp__android_mature_paywall_redesign_0124": "experiment", "exp__embedded_checkout_mobile_two_step_12_2023": "experiment", "exp__rewrite_trial_paywall_v5_02_2024": "control", "exp__lightweight_lesson_practice_09_2023_v2": "experiment", "exp__lohp_topic_icons_03_2024": "control", "exp__paywall_rewrite_trial_12_2023_v2": "control", "exp__phase2_course_deletion_v1_03_2024": "experiment", "exp__lohp_topic_icons_v2_03_2024": "control", "exp__lohp_above_fold_02_2024": "control", "exp__nux_savvy_new_renderer_v1_02_2024": "experiment", "exp__phase1_course_deletion_v2_02_2024": "experiment", "exp__remove_skip_button_nov_23": "control", "exp__course_deletion_v2_02_2024": "control", "exp__um_endstate_gamefeel_2023_dec": "experiment", "exp__rewrite_trial_paywall_v6_02_2024": "light_rewrite", "exp__phase2_v2_course_deletion_03_2024": "experiment", "exp__lohp_headline_03_2024": "control", "exp__lohp_video_v1_03_2024": "transparent_dot", "exp__android_multiple_page_paywall_0324": "control", "exp__lohp_header_subhead_03_2024": "control", "exp__lohp_subhead_03_2024": "guided_15_minutes"}'
+    data-facebook-ad-pixel-id="712046235504105"
+    data-google-tag-manager-id="GTM-5RMLTZ4"
+    data-google-ad-pixel-id="1007657493"
+    data-ltv-event-id="0"
+    data-ltv-event-ltv=""
+    data-ltv-event-currency=""
+    data-ltv-event-interval=""
+    data-ltv-event-confirm-url=""
+    data-send-ga-trial-subscription-event=""
+
+    
+        data-displayed-recommended-course-banner="true"
+        
+            data-recommended-course-id="60"
+        
+    
+
+    
+    data-is-tracked-user="true"
+    
+    
+    
+    >
+        <div class="ax-event" data-ax-name="sign_of_life" data-ax-properties='{"path": "/wiki/dijkstras-short-path-finder/", "full_path": "/wiki/dijkstras-short-path-finder/", "method": "GET", "ajax": false, "from_request": true, "is_android": false}'></div>
+</div>
+
+
+    
+        <div id="footer-notifs">
+            
+
+
+    
+
+
+        </div>
+    
+
+</div>
+
+
+    
+
+
+
+
+
+
+<div id="default-ajax-error"
+    class="hide"
+    data-error-title="Error"
+    data-error-content="We encountered an error while talking to our servers. Refresh the page and try again in a few seconds. If the problem persists, please <a href='mailto:support@brilliant.org'>email us</a>."
+    data-timeout-content="That action is taking longer than expected. This is likely due to network issues. Please try again in a few seconds, and if the problem persists, <a href='mailto:support@brilliant.org'>send us an email</a>.">
+</div>
+
+
+    <script type="text/javascript">
+        window.VERSIONS = {
+            
+        } ;
+    </script>
+
+
+    
+        
+    <script
+      src="https://browser.sentry-cdn.com/7.46.0/bundle.min.js"
+      integrity="sha384-AfN9/2RSX7pLS3X2yieiMJYVrZpmuiiy+X2VmHvghWptYJJhkBmN1sqvjpwkxHCu"
+      crossorigin="anonymous"
+    ></script>
+
+
+<script type="text/javascript">
+    var oldonload = window.onload || function () {};
+    window.onload = function () {
+        window.isLoaded = true;
+        oldonload.apply(this);
+    };
+
+    Sentry.init({
+        dsn: 'https://621cfa37a828468ab6b77f0cc3bff7dd@o1307044.ingest.sentry.io/6551268',
+        allowUrls: [
+            /brilliant\.org/,
+            /ds055uzetaobb\.cloudfront\.net/,
+            /d18l82el6cdm1i\.cloudfront\.net/,
+        ],
+    });
+    Sentry.setTags({
+            anonymous: true,
+            b2: false,
+            
+                client: 'desktop-browser'
+            
+        })
+
+    
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/site_media/build/dist/brilliant_vendors.11d549c99df487fe2879.js" type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/site_media/build/dist/brilliant_entry.d2c715bd1960e9553800.js" type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+        
+    
+
+    
+    
+<div id="fb-root"></div>
+<script>
+window.fbAsyncInit = function() {
+    FB.init({
+        appId: '326254770799145',
+        version: 'v13.0',
+        status: true,
+        xfbml: true,
+        frictionlessRequests: true
+    });
+
+    
+    window.fb_auth_status=function(c){
+        c=c||function(){};
+        FB.getLoginStatus(function(r){
+            if(r.status==='connected'){c(true,r);}
+            else{c(false,r);}
+        });
+    };
+    
+    window._fb_status=window._fb_status||[];
+    var i=0,l=_fb_status.length;
+    for(i;i<l;i++){fb_auth_status(_fb_status[i]);}
+    _fb_status=[];
+};
+
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+    
+    
+
+    
+
+    
+        
+            
+
+    <div class="nf-feeditem-modal hide" id="nf-feeditem-modal">
+
+        <div class="nf-modal-close close" id="nf-modal-close">&times;</div>
+
+        <div class="nf-modal-loading">
+            <div class="logo"></div>
+            <div class="stripe"></div>
+            <p class="solvable-text">Problem Loading...</p>
+            <p class="note-text">Note Loading...</p>
+            <p class="set-text">Set Loading...</p>
+        </div>
+
+        <div class="nf-feeditem-modal-wrapper">
+            <div class="nf-solvable-modal-content nf-modal-content solv-modal clearfix"
+                id="cmp_assessment_modal_public_solvable_component_id"></div>
+        </div>
+    </div>
+
+
+        
+    
+
+    </body>
+</html>
+
+
